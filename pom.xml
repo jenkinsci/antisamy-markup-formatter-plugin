@@ -6,7 +6,7 @@
         <version>1.551</version> <!-- TODO 1.553 when released -->
     </parent>
     <artifactId>antisamy-markup-formatter</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>AntiSamy Markup Formatter Plugin</name>
     <description>Uses policy definitions to allow limited HTML markup in user-submitted text.</description>
