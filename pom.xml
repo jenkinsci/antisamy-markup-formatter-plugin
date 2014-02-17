@@ -8,9 +8,9 @@
     <artifactId>antisamy-markup-formatter</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>hpi</packaging>
-    <name>AntiSamy Markup Formatter Plugin</name>
+    <name>OWASP Markup Formatter Plugin</name>
     <description>Uses policy definitions to allow limited HTML markup in user-submitted text.</description>
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/AntiSamy+Markup+Formatter+Plugin</url>
+    <url>http://wiki.jenkins-ci.org/display/JENKINS/OWASP+Markup+Formatter+Plugin</url>
     <licenses>
         <license>
             <name>MIT</name>

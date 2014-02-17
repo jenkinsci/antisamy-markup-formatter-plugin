@@ -1,4 +1,4 @@
 <div>
-    Uses <a href="https://www.owasp.org/index.php/Category:OWASP_AntiSamy_Project">OWASP AntiSamy</a>
+    Uses the <a href="https://www.owasp.org/index.php/OWASP_Java_HTML_Sanitizer_Project">OWASP Java HTML Sanitizer</a>
     to allow safe-seeming HTML markup to be entered in project descriptions and the like.
 </div>
