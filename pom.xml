@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.551</version> <!-- TODO 1.553 when released -->
+        <version>1.553</version>
     </parent>
     <artifactId>antisamy-markup-formatter</artifactId>
     <version>1.1-SNAPSHOT</version>
