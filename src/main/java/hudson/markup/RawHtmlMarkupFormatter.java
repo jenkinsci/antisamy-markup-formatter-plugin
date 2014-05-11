@@ -63,7 +63,7 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
     public static class DescriptorImpl extends MarkupFormatterDescriptor {
         @Override
         public String getDisplayName() {
-            return "Raw HTML";
+            return "Safe HTML";
         }
     }
 
