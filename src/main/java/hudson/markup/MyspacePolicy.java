@@ -43,6 +43,8 @@ public class MyspacePolicy {
                     "tabindex","disabled","readonly","accesskey","size",
                     "autocomplete","rows","cols").globally();
 
+            allowTextIn("style");
+
             disallowElements(
                     // I'm allowing iframe
                     "script","noscript",/*"iframe",*/"frameset","frame");
