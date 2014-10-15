@@ -20,9 +20,9 @@ public class MyspacePolicyTest extends Assert {
         assertIntact("<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
         assertReject("javascript","<a href='javascript:alert(5)'>test</a>");
 
-        assertIntact("<img src='http://www.cloudbees.com'>");
-        assertIntact("<img src='relative/test.png'>");
-        assertIntact("<img src='relative/test.png'>");
+        assertIntact("<img src='http://www.cloudbees.com' />");
+        assertIntact("<img src='relative/test.png' />");
+        assertIntact("<img src='relative/test.png' />");
         assertReject("javascript","<img src='javascript:alert(5)'>");
 
         assertIntact("<b><i><u><strike>basic tag</strike></u></i></b>");
@@ -43,7 +43,8 @@ public class MyspacePolicyTest extends Assert {
         assertIntact("<style>H1 { display:none; }</style>");
         assertReject("link", "<link rel='stylesheet' type='text/css' href='http://www.microsoft.com/'>");
         assertIntact("<div style='background-color:white'>inline CSS</div>");
-        assertIntact("<br><hr>");
+        assertIntact("<br /><hr />");
+        assertSanitize("<br /><hr />", "<br><hr>");
 
         assertReject("sun.com", "<form method='post' action='http://sun.com/'><input type='text' name='foo'><input type='password' name='pass'></form>");
     }
