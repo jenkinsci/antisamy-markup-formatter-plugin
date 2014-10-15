@@ -37,9 +37,9 @@
     </pluginRepositories>
     <dependencies>
         <dependency>
-            <groupId>org.kohsuke</groupId>
-            <artifactId>owasp-html-sanitizer</artifactId>
-            <version>r88</version>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <version>r239</version>
         </dependency>
     </dependencies>
 </project>
