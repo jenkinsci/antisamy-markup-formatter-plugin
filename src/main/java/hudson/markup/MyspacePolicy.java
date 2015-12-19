@@ -20,7 +20,7 @@ public class MyspacePolicy {
     public static final PolicyFactory POLICY_DEFINITION;
 
     private static final Pattern ONSITE_URL = Pattern.compile(
-        "(?:[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&;\\-_~,\\?=/!]+|\\#(\\w)+)");
+        "(?!//)(?:[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&;\\-_~,\\?=/!]+|\\#(\\w)+)");
     private static final Pattern OFFSITE_URL = Pattern.compile(
         "\\s*(?:(?:ht|f)tps?://|mailto:)[\\p{L}\\p{N}]"
         + "[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\+&;:\\-_~,\\?=/!\\(\\)]*\\s*");
