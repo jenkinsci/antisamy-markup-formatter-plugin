@@ -48,6 +48,11 @@ public class MyspacePolicyTest extends Assert {
         assertReject("sun.com", "<form method='post' action='http://sun.com/'><input type='text' name='foo'><input type='password' name='pass'></form>");
     }
 
+    @Test
+    public void testProtocolRelativeUrl() {
+        assertReject("action", "<form action='//example.org/evil.php'><input type='submit'/></form>");
+    }
+
     private void assertIntact(String input) {
         input = input.replace('\'','\"');
         assertSanitize(input,input);
