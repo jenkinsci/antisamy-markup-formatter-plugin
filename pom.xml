@@ -3,44 +3,37 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>2.7</version>
+        <version>3.25</version>
+        <relativePath />
     </parent>
+
     <artifactId>antisamy-markup-formatter</artifactId>
     <version>1.6-SNAPSHOT</version>
     <packaging>hpi</packaging>
+
     <name>OWASP Markup Formatter Plugin</name>
     <description>Uses policy definitions to allow limited HTML markup in user-submitted text.</description>
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/OWASP+Markup+Formatter+Plugin</url>
+    <url>https://wiki.jenkins.io/display/JENKINS/OWASP+Markup+Formatter+Plugin</url>
+
     <licenses>
         <license>
             <name>MIT</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
+
     <scm>
         <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
   
     <properties>
-      <jenkins.version>1.565.3</jenkins.version>
-      <java.level>6</java.level>
+      <jenkins.version>2.107.3</jenkins.version>
+      <java.level>8</java.level>
     </properties>
-  
-    <repositories>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.kohsuke</groupId>
@@ -48,4 +41,17 @@
             <version>r88</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

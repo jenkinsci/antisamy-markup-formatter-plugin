@@ -13,12 +13,12 @@ import java.util.regex.Pattern;
  * @author Kohsuke Kawaguchi
  */
 class HtmlPolicyBuilder2 extends HtmlPolicyBuilder {
-    public void tag(String names, Object... attributes) {
+    public HtmlPolicyBuilder2 tag(String names, Object... attributes) {
         String[] tags = names.split(",");
-        for (int i=0; i<attributes.length; i++) {
-            String attName = (String)attributes[i];
-            if (i+1<attributes.length) {
-                Object operand = attributes[i+1];
+        for (int i = 0; i < attributes.length; i++) {
+            String attName = (String) attributes[i];
+            if (i + 1 < attributes.length) {
+                Object operand = attributes[i + 1];
                 if (operand instanceof Predicate) {
                     Predicate p = (Predicate) operand;
                     allowAttributes(attName).matching(p).onElements(tags);
@@ -38,5 +38,6 @@ class HtmlPolicyBuilder2 extends HtmlPolicyBuilder {
             allowAttributes(attName).onElements(tags);
         }
         allowElements(tags);
+        return this;
     }
 }

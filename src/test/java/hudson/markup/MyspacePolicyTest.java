@@ -1,18 +1,17 @@
 package hudson.markup;
 
 import com.google.common.base.Throwables;
-import org.junit.Assert;
 import org.junit.Test;
-import org.owasp.html.Handler;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Kohsuke Kawaguchi
  */
-public class MyspacePolicyTest extends Assert {
+public class MyspacePolicyTest {
     @Test
     public void testPolicy() {
         assertIntact("<a href='http://www.cloudbees.com'>CB</a>");
@@ -69,20 +68,15 @@ public class MyspacePolicyTest extends Assert {
 
     private String sanitize(String input) {
         StringBuilder buf = new StringBuilder();
+        // System.out suppresses IOExceptions
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
                 buf,
                 // Receives notifications on a failure to write to the output.
-                new Handler<IOException>() {
-                    public void handle(IOException ex) {
-                        Throwables.propagate(ex);  // System.out suppresses IOExceptions
-                    }
-                },
+                Throwables::propagate,
                 // Our HTML parser is very lenient, but this receives notifications on
                 // truly bizarre inputs.
-                new Handler<String>() {
-                    public void handle(String x) {
-                        throw new AssertionError(x);
-                    }
+                x -> {
+                    throw new AssertionError(x);
                 }
         );
         HtmlSanitizer.sanitize(input, MyspacePolicy.POLICY_DEFINITION.apply(renderer));

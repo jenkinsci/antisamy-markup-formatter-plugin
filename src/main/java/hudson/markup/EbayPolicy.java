@@ -1,42 +1,40 @@
-// Copyright (c) 2011, Mike Samuel
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-//
-// Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-// Redistributions in binary form must reproduce the above copyright
-// notice, this list of conditions and the following disclaimer in the
-// documentation and/or other materials provided with the distribution.
-// Neither the name of the OWASP nor the names of its contributors may
-// be used to endorse or promote products derived from this software
-// without specific prior written permission.
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-// ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2011, Mike Samuel
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * Neither the name of the OWASP nor the names of its contributors may
+ * be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 package hudson.markup;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
-import org.owasp.html.Handler;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.HtmlSanitizer;
-import org.owasp.html.HtmlSanitizer.Policy;
-import org.owasp.html.HtmlStreamEventReceiver;
 import org.owasp.html.HtmlStreamRenderer;
 import org.owasp.html.PolicyFactory;
 
@@ -60,68 +58,61 @@ import java.util.regex.Pattern;
  */
 public class EbayPolicy {
 
-  // Some common regular expression definitions.
+    // Some common regular expression definitions.
 
-  // The 16 colors defined by the HTML Spec (also used by the CSS Spec)
-  private static final Pattern COLOR_NAME = Pattern.compile(
-      "(?:aqua|black|blue|fuchsia|gray|grey|green|lime|maroon|navy|olive|purple"
-      + "|red|silver|teal|white|yellow)");
+    /**
+     * The 16 colors defined by the HTML Spec (also used by the CSS Spec)
+     */
+    private static final Pattern COLOR_NAME = Pattern.compile(
+            "(?:aqua|black|blue|fuchsia|gray|grey|green|lime|maroon|navy|olive|purple"
+                    + "|red|silver|teal|white|yellow)");
 
-  // HTML/CSS Spec allows 3 or 6 digit hex to specify color
-  private static final Pattern COLOR_CODE = Pattern.compile(
-      "(?:#(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?))");
+    /**
+     * HTML / CSS Spec allows 3 or 6 digit hex to specify color
+     */
+    private static final Pattern COLOR_CODE = Pattern.compile("(?:#(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?))");
 
-  private static final Pattern NUMBER_OR_PERCENT = Pattern.compile(
-      "[0-9]+%?");
-  private static final Pattern PARAGRAPH = Pattern.compile(
-      "(?:[\\p{L}\\p{N},'\\.\\s\\-_\\(\\)]|&[0-9]{2};)*");
-  private static final Pattern HTML_ID = Pattern.compile(
-      "[a-zA-Z0-9\\:\\-_\\.]+");
-  // force non-empty with a '+' at the end instead of '*'
-  private static final Pattern HTML_TITLE = Pattern.compile(
-      "[\\p{L}\\p{N}\\s\\-_',:\\[\\]!\\./\\\\\\(\\)&]*");
-  private static final Pattern HTML_CLASS = Pattern.compile(
-      "[a-zA-Z0-9\\s,\\-_]+");
+    private static final Pattern NUMBER_OR_PERCENT = Pattern.compile("[0-9]+%?");
 
-  private static final Pattern ONSITE_URL = Pattern.compile(
-      "(?:[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&;\\-_~,\\?=/!]+|\\#(\\w)+)");
-  private static final Pattern OFFSITE_URL = Pattern.compile(
-      "\\s*(?:(?:ht|f)tps?://|mailto:)[\\p{L}\\p{N}]"
-      + "[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\+&;:\\-_~,\\?=/!\\(\\)]*\\s*");
+    private static final Pattern PARAGRAPH = Pattern.compile("(?:[\\p{L}\\p{N},'\\.\\s\\-_\\(\\)]|&[0-9]{2};)*");
 
-  private static final Pattern NUMBER = Pattern.compile(
-      "[+-]?(?:(?:[0-9]+(?:\\.[0-9]*)?)|\\.[0-9]+)");
+    private static final Pattern HTML_ID = Pattern.compile("[a-zA-Z0-9\\:\\-_\\.]+");
 
-  private static final Pattern NAME = Pattern.compile("[a-zA-Z0-9\\-_\\$]+");
+    /**
+     * force non-empty with a '+' at the end instead of '*'
+     */
+    private static final Pattern HTML_TITLE = Pattern.compile("[\\p{L}\\p{N}\\s\\-_',:\\[\\]!\\./\\\\\\(\\)&]*");
 
-  private static final Pattern ALIGN = Pattern.compile(
-      "(?i)center|left|right|justify|char");
+    private static final Pattern HTML_CLASS = Pattern.compile("[a-zA-Z0-9\\s,\\-_]+");
 
-  private static final Pattern VALIGN = Pattern.compile(
-      "(?i)baseline|bottom|middle|top");
+    private static final Pattern ONSITE_URL = Pattern.compile(
+            "(?:[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\+&;\\-_~,\\?=/!]+|\\#(\\w)+)"
+    );
 
-  private static final Predicate<String> COLOR_NAME_OR_COLOR_CODE
-      = new Predicate<String>() {
-        public boolean apply(String s) {
-          return COLOR_NAME.matcher(s).matches()
-              || COLOR_CODE.matcher(s).matches();
-        }
-      };
+    private static final Pattern OFFSITE_URL = Pattern.compile(
+            "\\s*(?:(?:ht|f)tps?://|mailto:)[\\p{L}\\p{N}]"
+                    + "[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\+&;:\\-_~,\\?=/!\\(\\)]*\\s*"
+    );
 
-  private static final Predicate<String> ONSITE_OR_OFFSITE_URL
-      = new Predicate<String>() {
-        public boolean apply(String s) {
-          return ONSITE_URL.matcher(s).matches()
-              || OFFSITE_URL.matcher(s).matches();
-        }
-      };
+    private static final Pattern NUMBER = Pattern.compile("[+-]?(?:(?:[0-9]+(?:\\.[0-9]*)?)|\\.[0-9]+)");
 
-  private static final Pattern HISTORY_BACK = Pattern.compile(
-      "(?:javascript:)?\\Qhistory.go(-1)\\E");
+    private static final Pattern NAME = Pattern.compile("[a-zA-Z0-9\\-_\\$]+");
 
-  private static final Pattern ONE_CHAR = Pattern.compile(
-      ".?", Pattern.DOTALL);
+    private static final Pattern ALIGN = Pattern.compile("(?i)center|left|right|justify|char");
 
+    private static final Pattern VALIGN = Pattern.compile("(?i)baseline|bottom|middle|top");
+
+    private static final Predicate<String> COLOR_NAME_OR_COLOR_CODE = s ->
+            COLOR_NAME.matcher(s).matches()
+                    || COLOR_CODE.matcher(s).matches();
+
+    private static final Predicate<String> ONSITE_OR_OFFSITE_URL = s ->
+            ONSITE_URL.matcher(s).matches()
+                    || OFFSITE_URL.matcher(s).matches();
+
+    private static final Pattern HISTORY_BACK = Pattern.compile("(?:javascript:)?\\Qhistory.go(-1)\\E");
+
+    private static final Pattern ONE_CHAR = Pattern.compile(".?", Pattern.DOTALL);
 
     public static final PolicyFactory POLICY_DEFINITION;
 
@@ -216,23 +207,17 @@ public class EbayPolicy {
         }
         System.err.println("[Reading from STDIN]");
         // Fetch the HTML to sanitize.
-        String html = CharStreams.toString(
-                new InputStreamReader(System.in, Charsets.UTF_8));
+        String html = CharStreams.toString(new InputStreamReader(System.in, Charsets.UTF_8));
         // Set up an output channel to receive the sanitized HTML.
+        // System.out suppresses IOExceptions
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
                 System.out,
                 // Receives notifications on a failure to write to the output.
-                new Handler<IOException>() {
-                    public void handle(IOException ex) {
-                        Throwables.propagate(ex);  // System.out suppresses IOExceptions
-                    }
-                },
+                Throwables::propagate,
                 // Our HTML parser is very lenient, but this receives notifications on
                 // truly bizarre inputs.
-                new Handler<String>() {
-                    public void handle(String x) {
-                        throw new AssertionError(x);
-                    }
+                x -> {
+                    throw new AssertionError(x);
                 }
         );
         // Use the policy defined above to sanitize the HTML.
