@@ -27,6 +27,7 @@
     <properties>
       <jenkins.version>2.60.3</jenkins.version>
       <java.level>8</java.level>
+      <jcasc.version>1.29</jcasc.version>
     </properties>
   
     <repositories>
@@ -46,6 +47,20 @@
             <groupId>org.kohsuke</groupId>
             <artifactId>owasp-html-sanitizer</artifactId>
             <version>r88</version>
+        </dependency>
+        <!-- JCasC compatibility -->
+        <dependency>
+            <groupId>io.jenkins</groupId>
+            <artifactId>configuration-as-code</artifactId>
+            <version>${jcasc.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jenkins</groupId>
+            <artifactId>configuration-as-code</artifactId>
+            <version>${jcasc.version}</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
