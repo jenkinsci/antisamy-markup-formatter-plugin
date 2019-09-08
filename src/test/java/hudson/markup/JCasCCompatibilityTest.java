@@ -16,7 +16,7 @@ public class JCasCCompatibilityTest extends RoundTripAbstractTest {
 
     @Override
     protected String stringInLogExpected() {
-        return "Setting class hudson.markup.RawHtmlMarkupFormatter. disableSyntaxHighlighting = true";
+        return "Setting class hudson.markup.RawHtmlMarkupFormatter.disableSyntaxHighlighting = true";
     }
 
 }
