@@ -17,7 +17,7 @@ The filter is not presently configurable or customisable without
 writing a new extension to define a policy. The only filter available
 for use is the
 [`RawHtmlMarkupFormatter`](src/main/java/hudson/markup/RawHtmlMarkupFormatter.java),
-which uses the [`MyspacePolicy](src/main/java/hudson/markup/MyspacePolicy.java).
+which uses the [`MyspacePolicy`](src/main/java/hudson/markup/MyspacePolicy.java).
 
 The facilities in this extension can be used to write formatters that use
 custom policies. Model them on `RawHtmlMarkupFormatter` and `MyspacePolicy`.
