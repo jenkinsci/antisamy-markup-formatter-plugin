@@ -22,6 +22,29 @@ which uses the [`MyspacePolicy`](src/main/java/hudson/markup/MyspacePolicy.java)
 The facilities in this extension can be used to write formatters that use
 custom policies. Model them on `RawHtmlMarkupFormatter` and `MyspacePolicy`.
 
+## Configuration
+
+This plugin is bundled in the Jenkins WAR file and will generally be
+preinstalled.
+
+When installed, 'Safe HTML' can be selected as Markup Formatter in
+"Manage Jenkins" → "Configure Global Security" → "Markup Formatter":
+
+![](docs/images/safeHtml.png){.confluence-embedded-image
+.confluence-content-image-border}
+
+User-submitted text will be sanitized by removing potentially dangerous
+elements.
+
+![](docs/images/sanitized.png){.confluence-embedded-image
+.confluence-content-image-border}
+
+## Changing or altering the policy
+
+At least in 1.5, the "Safe HTML" plugin has no support for editing,
+overriding, or updating the HTML sanitization policy. A custom plugin
+must be built instead. See `hudson.markup.RawHtmlMarkupFormatter.java` .
+
 # See also:
 
 * [Jenkins Plugin Wiki page](https://wiki.jenkins.io/pages/viewpage.action?pageId=71436291)
