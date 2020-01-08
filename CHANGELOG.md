@@ -3,7 +3,7 @@
 ### Version 1.6 and later
 
 See [GitHub
-releases](https://github.com/jenkinsci/antisamy-markup-formatter-plugin/releases){.external-link}.
+releases](https://github.com/jenkinsci/antisamy-markup-formatter-plugin/releases)
 
 ### Version 1.5 (June 8, 2016)
 
