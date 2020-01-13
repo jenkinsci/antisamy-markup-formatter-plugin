@@ -10,7 +10,7 @@
     <packaging>hpi</packaging>
     <name>OWASP Markup Formatter Plugin</name>
     <description>Uses policy definitions to allow limited HTML markup in user-submitted text.</description>
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/OWASP+Markup+Formatter+Plugin</url>
+    <url>https://github.com/jenkinsci/antisamy-markup-formatter-plugin</url>
     <licenses>
         <license>
             <name>MIT</name>
