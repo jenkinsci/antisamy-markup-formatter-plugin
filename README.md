@@ -26,6 +26,4 @@ At least in 1.5, the "Safe HTML" plugin has no support for editing, overriding, 
 
 # See also:
 
-* [Jenkins Plugin Wiki page](https://wiki.jenkins.io/pages/viewpage.action?pageId=71436291)
-* [Jenkins Plugin Site page](https://plugins.jenkins.io/antisamy-markup-formatter)
 * ["Managing Security" in Jenkins documentation](https://jenkins.io/doc/book/managing/security/)
