@@ -3,7 +3,6 @@ package hudson.markup;
 import com.google.common.base.Throwables;
 import hudson.Extension;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.owasp.html.Handler;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
@@ -32,11 +31,10 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
 
     @Override
     public void translate(String markup, Writer output) throws IOException {
-        // System.out suppresses IOExceptions
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
                 output,
                 // Receives notifications on a failure to write to the output.
-                Throwables::propagate,
+                Throwables::propagate, // System.out suppresses IOExceptions
                 // Our HTML parser is very lenient, but this receives notifications on
                 // truly bizarre inputs.
                 x -> {

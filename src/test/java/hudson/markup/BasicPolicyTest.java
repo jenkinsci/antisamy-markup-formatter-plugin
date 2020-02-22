@@ -3,16 +3,12 @@ package hudson.markup;
 import com.google.common.base.Throwables;
 import org.junit.Assert;
 import org.junit.Test;
-import org.owasp.html.Handler;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
 import java.io.IOException;
 
-/**
- * @author Kohsuke Kawaguchi
- */
-public class MyspacePolicyTest extends Assert {
+public class BasicPolicyTest extends Assert {
     @Test
     public void testPolicy() {
         assertSanitize("<a href='http://www.cloudbees.com' rel='nofollow'>CB</a>", "<a href='http://www.cloudbees.com'>CB</a>");
@@ -23,6 +19,7 @@ public class MyspacePolicyTest extends Assert {
         assertIntact("<img src='http://www.cloudbees.com' />");
         assertIntact("<img src='relative/test.png' />");
         assertIntact("<img src='relative/test.png' />");
+        assertReject("onerror","<img src='x' onerror='alert(5)'>");
         assertReject("javascript","<img src='javascript:alert(5)'>");
 
         assertIntact("<b><i><u><strike>basic tag</strike></u></i></b>");
@@ -33,6 +30,7 @@ public class MyspacePolicyTest extends Assert {
         assertIntact("<dl><dt>abc</dt><dd>foo</dd></dl>");
         assertIntact("<table><tbody><tr><th>header</th></tr><tr><td>something</td></tr></tbody></table>");
         assertIntact("<h1>title</h1><blockquote>blurb</blockquote>");
+        assertReject("style", "<div style='background-color: expression(alert(123));'>inline CSS</div>");
 
         assertReject("iframe", "<iframe src='nested'></iframe>");
 
@@ -72,17 +70,11 @@ public class MyspacePolicyTest extends Assert {
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
                 buf,
                 // Receives notifications on a failure to write to the output.
-                new Handler<IOException>() {
-                    public void handle(IOException ex) {
-                        Throwables.propagate(ex);  // System.out suppresses IOExceptions
-                    }
-                },
+                Throwables::propagate, // System.out suppresses IOExceptions
                 // Our HTML parser is very lenient, but this receives notifications on
                 // truly bizarre inputs.
-                new Handler<String>() {
-                    public void handle(String x) {
-                        throw new AssertionError(x);
-                    }
+                x -> {
+                    throw new AssertionError(x);
                 }
         );
         HtmlSanitizer.sanitize(input, BasicPolicy.POLICY_DEFINITION.apply(renderer));
