@@ -4,6 +4,8 @@
 
 This plugin sanitizes HTML sources according to the [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer) and a basic policy allowing limited HTML markup in user-submitted text.
 
+*NOTE*: Both the file name <code>antisamy-markup-formatter</code> and the class name <code>RawHtmlMarkupFormatter</code> are misleading: Neither describes the behavior of the plugin. Both names are used for historical reasons only.
+
 This plugin is bundled in the Jenkins WAR file and will generally be installed when using the setup wizard, or as a dependency of other plugins.
 
 The "Safe HTML" option in the "Global Security Configuration" page of Jenkins CI is provided by this plugin. This is what controls the HTML filtering for your job descriptions, etc.
