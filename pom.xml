@@ -25,9 +25,10 @@
   </scm>
 
     <properties>
-      <jenkins.version>2.121.3</jenkins.version>
-      <java.level>8</java.level>
-      <jcasc.version>1.35</jcasc.version>
+        <jenkins.version>2.121.3</jenkins.version>
+        <java.level>8</java.level>
+        <jcasc.version>1.35</jcasc.version>
+        <hpi.compatibleSinceVersion>2.0</hpi.compatibleSinceVersion>
     </properties>
 
     <repositories>
