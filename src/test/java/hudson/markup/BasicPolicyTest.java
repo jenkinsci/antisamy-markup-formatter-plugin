@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
-import java.io.IOException;
-
 public class BasicPolicyTest extends Assert {
     @Test
     public void testPolicy() {
@@ -37,6 +35,8 @@ public class BasicPolicyTest extends Assert {
         assertReject("script","<script>window.alert(5);</script>");
         assertReject("script","<script src='http://foo/evil.js'></script>");
         assertReject("script","<script src='relative.js'></script>");
+
+        assertReject("form", "<form/>");
 
         assertReject("style", "<style>H1 { display:none; }</style>");
         assertReject("link", "<link rel='stylesheet' type='text/css' href='http://www.microsoft.com/'>");
