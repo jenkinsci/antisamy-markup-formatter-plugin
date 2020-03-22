@@ -13,6 +13,11 @@ public class BasicPolicyTest extends Assert {
     public void testPolicy() {
         assertSanitize("<a href='http://www.cloudbees.com' rel='nofollow'>CB</a>", "<a href='http://www.cloudbees.com'>CB</a>");
         assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link'>relative</a>");
+        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
+
+        // TODO arguable, see JENKINS-55029
+        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='_blank'>relative</a>");
+
         assertSanitize("<a href='mailto:kk&#64;kohsuke.org' rel='nofollow'>myself</a>", "<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
         assertReject("javascript","<a href='javascript:alert(5)'>test</a>");
 
