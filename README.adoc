@@ -3,8 +3,10 @@
 This plugin is also known as "Safe HTML" Plugin and `antisamy-markup-formatter`.
 
 [NOTE]
-OWASP Markup Formatter Plugin 2.0 reduced the set of allowed elements.
+**The plugin manager contains a slightly misleading warning:**
+While there is no "different settings format", OWASP Markup Formatter Plugin 2.0 reduced the set of allowed elements.
 Previously defined descriptions may no longer look the same.
+The plugin can be freely upgraded to 2.0 or downgraded again to 1.8, if necessary.
 
 
 == About
