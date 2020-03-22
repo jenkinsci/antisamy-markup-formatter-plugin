@@ -1,0 +1,39 @@
+= OWASP Markup Formatter Plugin
+
+This plugin is also known as "Safe HTML" Plugin and `antisamy-markup-formatter`.
+
+[NOTE]
+OWASP Markup Formatter Plugin 2.0 reduced the set of allowed elements.
+Previously defined descriptions may no longer look the same.
+
+
+== About
+
+This plugin allows formatting descriptions of jobs, builds, views, etc. in Jenkins using a safe subset of HTML.
+
+This plugin sanitizes HTML sources using the https://github.com/owasp/java-html-sanitizer[OWASP Java HTML Sanitizer] and a basic policy allowing limited HTML markup in user-submitted text.
+
+Learn more:
+https://jenkins.io/doc/book/managing/security/#markup-formatter[Markup Formatter configuration in the Jenkins handbook]
+
+
+== Installation
+
+This plugin is usually installed because it's a _suggested_ plugin in the setup wizard;
+Administrators installing the default set of plugins will also install this plugin that way.
+
+It is also bundled in the `jenkins.war` and will automatically installed as a dependency of plugins with very old (1.553 or older) Jenkins core dependencies.
+
+
+== Configuration
+
+Once the plugin is installed, go to _Manage Jenkins → Configure Global Security → Markup Formatter_.
+Select _Safe HTML_ for the _Markup Formatter_ option.
+
+User-submitted text, like build, job, and view descriptions, will then support HTML formatting, but will be sanitized by removing potentially dangerous elements.
+
+
+== About Internal Names
+
+Both the file name `antisamy-markup-formatter.hpi` and the class name `RawHtmlMarkupFormatter` are misleading:
+Neither describes the current behavior of the plugin; both names are used for historical reasons only.
