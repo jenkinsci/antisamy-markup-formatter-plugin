@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
+import java.io.IOException;
+
 public class BasicPolicyTest extends Assert {
     @Test
     public void testPolicy() {
@@ -66,18 +68,10 @@ public class BasicPolicyTest extends Assert {
     }
 
     private String sanitize(String input) {
-        StringBuilder buf = new StringBuilder();
-        HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
-                buf,
-                // Receives notifications on a failure to write to the output.
-                Throwables::propagate, // System.out suppresses IOExceptions
-                // Our HTML parser is very lenient, but this receives notifications on
-                // truly bizarre inputs.
-                x -> {
-                    throw new AssertionError(x);
-                }
-        );
-        HtmlSanitizer.sanitize(input, BasicPolicy.POLICY_DEFINITION.apply(renderer));
-        return buf.toString();
+        try {
+            return new RawHtmlMarkupFormatter(false).translate(input);
+        } catch (IOException ex) {
+            throw new AssertionError(ex);
+        }
     }
 }
