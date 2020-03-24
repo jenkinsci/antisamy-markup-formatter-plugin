@@ -10,6 +10,7 @@ public class BasicPolicy {
     public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder2() {{
         tag("dl,dt,dd");
         tag("hr");
+        tag("pre");
     }}.toFactory();
 
     static {
