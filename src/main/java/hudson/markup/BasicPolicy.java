@@ -8,7 +8,7 @@ public class BasicPolicy {
     public static final PolicyFactory POLICY_DEFINITION;
 
 
-    public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr").toFactory();
+    public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr", "pre").toFactory();
 
     static {
         POLICY_DEFINITION = Sanitizers.BLOCKS.
