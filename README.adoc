@@ -33,6 +33,7 @@ Select _Safe HTML_ for the _Markup Formatter_ option.
 
 User-submitted text, like build, job, and view descriptions, will then support HTML formatting, but will be sanitized by removing potentially dangerous elements.
 
+The `id` attribute is kept always.
 
 == About Internal Names
 

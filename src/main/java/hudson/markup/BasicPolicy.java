@@ -10,7 +10,10 @@ public class BasicPolicy {
     public static final PolicyFactory POLICY_DEFINITION;
 
     @Restricted(NoExternalUse.class)
-    public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr", "pre").toFactory();
+    public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder()
+            .allowElements("dl", "dt", "dd", "hr", "pre")
+            .allowAttributes("id").globally()
+            .toFactory();
 
     @Restricted(NoExternalUse.class)
     public static final PolicyFactory LINK_TARGETS = new HtmlPolicyBuilder()
