@@ -14,6 +14,7 @@ public class BasicPolicyTest extends Assert {
         assertSanitize("<a href='http://www.cloudbees.com' rel='nofollow'>CB</a>", "<a href='http://www.cloudbees.com'>CB</a>");
         assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link'>relative</a>");
         assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
+        assertSanitize("<a href='relative/link' title='title' rel='nofollow'>relative</a>", "<a href='relative/link' title='title'>relative</a>");
 
         // TODO arguable, see JENKINS-55029
         assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='_blank'>relative</a>");
@@ -24,6 +25,7 @@ public class BasicPolicyTest extends Assert {
         assertIntact("<img src='http://www.cloudbees.com' />");
         assertIntact("<img src='relative/test.png' />");
         assertIntact("<img src='relative/test.png' />");
+        assertIntact("<img src='relative/test.png' title='test' />");
         assertReject("onerror","<img src='x' onerror='alert(5)'>");
         assertReject("javascript","<img src='javascript:alert(5)'>");
 
