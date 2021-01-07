@@ -1,13 +1,19 @@
 package hudson.markup;
 
 import com.google.common.base.Throwables;
+import hudson.util.FormValidation;
 import hudson.Extension;
+import hudson.markup.ParseAdditionalAllowed;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.ParseException;
+import java.lang.UnsupportedOperationException;
+
 
 /**
  * {@link MarkupFormatter} that sanitizes HTML, allowing some safe (formatting) HTML.
@@ -17,16 +23,23 @@ import java.io.Writer;
  *
  */
 public class RawHtmlMarkupFormatter extends MarkupFormatter {
-
     final boolean disableSyntaxHighlighting;
+    final String additionalAllowed;
+    private final transient BasicPolicy policy;
 
     @DataBoundConstructor
-    public RawHtmlMarkupFormatter(final boolean disableSyntaxHighlighting) {
+    public RawHtmlMarkupFormatter(final boolean disableSyntaxHighlighting, final String additionalAllowed) {
         this.disableSyntaxHighlighting = disableSyntaxHighlighting;
+        this.additionalAllowed = additionalAllowed;
+        this.policy = new BasicPolicy(additionalAllowed);
     }
 
     public boolean isDisableSyntaxHighlighting() {
         return disableSyntaxHighlighting;
+    }
+
+    public String getAdditionalAllowed() {
+        return additionalAllowed;
     }
 
     @Override
@@ -41,7 +54,8 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
                     throw new Error(x);
                 }
         );
-        HtmlSanitizer.sanitize(markup, BasicPolicy.POLICY_DEFINITION.apply(renderer));
+        // BUG: policy is null here until the config page has been visited
+        HtmlSanitizer.sanitize(markup, this.policy.POLICY_DEFINITION.apply(renderer));
     }
 
     public String getCodeMirrorMode() {
@@ -58,7 +72,14 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
         public String getDisplayName() {
             return "Safe HTML";
         }
-    }
 
-    public static final MarkupFormatter INSTANCE = new RawHtmlMarkupFormatter(false);
+        public FormValidation doCheckAdditionalAllowed(@QueryParameter String value) throws IOException {
+            try {
+                ParseAdditionalAllowed.validateAdditionalAllowed(value);
+                return FormValidation.ok();
+            } catch (ParseException ex) {
+                return FormValidation.error(ex.toString());
+            }
+        }
+    }
 }
