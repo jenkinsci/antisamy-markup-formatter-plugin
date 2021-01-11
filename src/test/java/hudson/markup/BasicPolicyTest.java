@@ -11,14 +11,27 @@ import java.io.IOException;
 public class BasicPolicyTest extends Assert {
     @Test
     public void testPolicy() {
-        assertSanitize("<a href='http://www.cloudbees.com' rel='nofollow'>CB</a>", "<a href='http://www.cloudbees.com'>CB</a>");
-        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link'>relative</a>");
-        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
+        assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com'>CB</a>");
+        assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com' target='foo'>CB</a>");
+        assertSanitize("<a href='https://www.cloudbees.com' target='_blank' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com' target='_blank'>CB</a>");
 
-        // TODO arguable, see JENKINS-55029
-        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='_blank'>relative</a>");
+        assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link'>relative</a>");
+        assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
+        assertSanitize("<a href='relative/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' target='_blank'>relative</a>");
 
-        assertSanitize("<a href='mailto:kk&#64;kohsuke.org' rel='nofollow'>myself</a>", "<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
+        assertSanitize("<a href='/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='/link'>relative</a>");
+        assertSanitize("<a href='/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='/link' target='foo'>relative</a>");
+        assertSanitize("<a href='/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='/link' target='_blank'>relative</a>");
+
+        assertSanitize("<a href='//www.cloudbees.com' rel='nofollow noopener noreferrer'>relative</a>", "<a href='//www.cloudbees.com'>relative</a>");
+        assertSanitize("<a href='//www.cloudbees.com' rel='nofollow noopener noreferrer'>relative</a>", "<a href='//www.cloudbees.com' target='foo'>relative</a>");
+        assertSanitize("<a href='//www.cloudbees.com' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='//www.cloudbees.com' target='_blank'>relative</a>");
+
+        assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='noreferrer'>relative</a>");
+        assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='noopener' target='foo'>relative</a>");
+        assertSanitize("<a href='relative/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='nofollow' target='_blank'>relative</a>");
+
+        assertSanitize("<a href='mailto:kk&#64;kohsuke.org' rel='nofollow noopener noreferrer'>myself</a>", "<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
         assertReject("javascript","<a href='javascript:alert(5)'>test</a>");
 
         assertIntact("<img src='http://www.cloudbees.com' />");
