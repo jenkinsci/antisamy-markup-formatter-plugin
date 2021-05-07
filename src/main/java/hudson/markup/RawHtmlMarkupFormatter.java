@@ -25,13 +25,23 @@ import java.lang.UnsupportedOperationException;
 public class RawHtmlMarkupFormatter extends MarkupFormatter {
     final boolean disableSyntaxHighlighting;
     final String additionalAllowed;
-    private final transient BasicPolicy policy;
+    private transient BasicPolicy policy;
 
     @DataBoundConstructor
     public RawHtmlMarkupFormatter(final boolean disableSyntaxHighlighting, final String additionalAllowed) {
         this.disableSyntaxHighlighting = disableSyntaxHighlighting;
         this.additionalAllowed = additionalAllowed;
         this.policy = new BasicPolicy(additionalAllowed);
+    }
+
+    /**
+     * Restores the configuration after deserialization.
+     *
+     * @return this instance
+     */
+    protected Object readResolve() {
+        this.policy = new BasicPolicy(this.additionalAllowed);
+        return this;
     }
 
     public boolean isDisableSyntaxHighlighting() {
