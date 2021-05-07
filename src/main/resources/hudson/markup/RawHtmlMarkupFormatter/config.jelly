@@ -7,4 +7,7 @@
   <f:entry field="disableSyntaxHighlighting">
       <f:checkbox title="${%disableSyntaxHighlighting}"/>
   </f:entry>
+  <f:entry field="additionalAllowed" title="${%additionalAllowed}">
+      <f:textbox/>
+  </f:entry>
 </j:jelly>
