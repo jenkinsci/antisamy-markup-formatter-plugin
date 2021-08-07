@@ -17,7 +17,7 @@ public class BasicPolicy {
         String[] oneElt = new String[1];
 
         for (ElementInfo eltInf : new ParseAdditionalAllowed(additionalAllowed)) {
-            System.out.println("ELTINF:" + eltInf.dump());
+            // System.out.println("ELTINF:" + eltInf.dump());
             oneElt[0] = eltInf.tag;
             if (eltInf.attributes.isEmpty()) {
                 USER_ADDITIONS = USER_ADDITIONS.and(new HtmlPolicyBuilder().allowElements(oneElt).toFactory());
