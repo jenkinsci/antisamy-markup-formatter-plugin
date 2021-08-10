@@ -49,6 +49,7 @@ public class BasicPolicyTest extends Assert {
         assertReject("link", "<link rel='stylesheet' type='text/css' href='http://www.microsoft.com/'>");
         assertIntact("<div style='background-color:white'>inline CSS</div>");
         assertIntact("<br /><hr />");
+        assertIntact("<span title='World'>Hello</span>", "span[title]");
 
         assertReject("sun.com", "<form method='post' action='http://sun.com/'><input type='text' name='foo'><input type='password' name='pass'></form>");
     }
@@ -62,6 +63,11 @@ public class BasicPolicyTest extends Assert {
         input = input.replace('\'','\"');
         assertSanitize(input,input);
     }
+
+    private void assertIntact(String input, String additionalAllowed) {
+        input = input.replace('\'','\"');
+        assertSanitize(input, input, additionalAllowed);
+    }
     
     private void assertReject(String problematic, String input) {
         String out = sanitize(input);
@@ -72,9 +78,21 @@ public class BasicPolicyTest extends Assert {
         assertEquals(expected.replace('\'','\"'),sanitize(input));
     }
 
+    private void assertSanitize(String expected, String input, String additionalAllowed) {
+        assertEquals(expected.replace('\'','\"'), sanitize(input, additionalAllowed));
+    }
+
     private String sanitize(String input) {
         try {
-            return new RawHtmlMarkupFormatter(false).translate(input);
+            return new RawHtmlMarkupFormatter(false, "").translate(input);
+        } catch (IOException ex) {
+            throw new AssertionError(ex);
+        }
+    }
+
+    private String sanitize(String input, String additionalAllowed) {
+        try {
+            return new RawHtmlMarkupFormatter(false, additionalAllowed).translate(input);
         } catch (IOException ex) {
             throw new AssertionError(ex);
         }
