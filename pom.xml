@@ -6,7 +6,7 @@
         <version>4.28</version>
     </parent>
     <artifactId>antisamy-markup-formatter</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2.1</version>
     <packaging>hpi</packaging>
     <name>OWASP Markup Formatter Plugin</name>
     <description>Sanitize HTML markup in user-submitted text to be displayed on the Jenkins UI.</description>
@@ -21,7 +21,7 @@
         <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-      <tag>HEAD</tag>
+      <tag>antisamy-markup-formatter-2.2.1</tag>
   </scm>
 
     <properties>
