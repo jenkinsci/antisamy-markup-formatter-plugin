@@ -1,6 +1,5 @@
 package hudson.markup;
 
-import com.google.common.base.Throwables;
 import org.junit.Assert;
 import org.junit.Test;
 import org.owasp.html.HtmlSanitizer;
