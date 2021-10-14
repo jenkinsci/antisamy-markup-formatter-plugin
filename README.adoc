@@ -8,7 +8,6 @@ While there is no "different settings format", OWASP Markup Formatter Plugin 2.0
 Previously defined descriptions may no longer look the same.
 The plugin can be freely upgraded to 2.0 or downgraded again to 1.8, if necessary.
 
-
 == About
 
 This plugin allows formatting descriptions of jobs, builds, views, etc. in Jenkins using a safe subset of HTML.
