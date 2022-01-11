@@ -25,7 +25,7 @@
   </scm>
 
     <properties>
-        <revision>2.7</revision>
+        <revision>3.0</revision>
         <changelist>-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/antisamy-markup-formatter-plugin</gitHubRepo>
         <jenkins.version>2.277.4</jenkins.version>
