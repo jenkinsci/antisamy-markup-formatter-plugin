@@ -1,2 +1,1 @@
 _extends: .github
-tag-template: antisamy-markup-formatter-$NEXT_MINOR_VERSION
