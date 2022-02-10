@@ -10,15 +10,11 @@ import java.io.IOException;
 public class BasicPolicyTest extends Assert {
     @Test
     public void testPolicy() {
-        assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow'>CB</a>", "<a href='http://www.cloudbees.com'>CB</a>");
+        assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow' title='Cloudbees'>CB</a>", "<a href='http://www.cloudbees.com' title='Cloudbees'>CB</a>");
         assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com'>CB</a>");
         assertSanitize("<a href='https://www.cloudbees.com' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com' target='foo'>CB</a>");
         assertSanitize("<a href='https://www.cloudbees.com' target='_blank' rel='nofollow noopener noreferrer'>CB</a>", "<a href='https://www.cloudbees.com' target='_blank'>CB</a>");
         
-        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link'>relative</a>");
-        assertSanitize("<a href='relative/link' rel='nofollow'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
-        assertSanitize("<a href='relative/link' title='title' rel='nofollow'>relative</a>", "<a href='relative/link' title='title'>relative</a>");       
-        assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link'>relative</a>");    
         assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' target='foo'>relative</a>");
         assertSanitize("<a href='relative/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' target='_blank'>relative</a>");
 
