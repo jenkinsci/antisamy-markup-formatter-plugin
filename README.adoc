@@ -33,7 +33,30 @@ Select _Safe HTML_ for the _Markup Formatter_ option.
 
 User-submitted text, like build, job, and view descriptions, will then support HTML formatting, but will be sanitized by removing potentially dangerous elements.
 
+The following attributes are kept in a way to allow styling and at the same time stop low privilege users to replicate real looking UI.
+
 The `id` attribute is kept always.
+
+The `class` attribute is kept _only_ if it starts with `safe-html-`. For example, this user-entered text
+
+```
+<div id="foo" class="will-be-removed>
+  <div id="bar" class="safe-html-will-be-kept">
+    Some text
+  </div>
+</div>
+```
+
+will be sanitized to:
+
+```
+<div id="foo">
+  <div id="bar" class="safe-html-will-be-kept">
+    Some text
+  </div>
+</div>
+```
+
 
 == About Internal Names
 

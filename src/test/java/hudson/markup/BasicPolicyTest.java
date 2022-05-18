@@ -65,6 +65,9 @@ public class BasicPolicyTest extends Assert {
         assertReject("sun.com", "<form method='post' action='http://sun.com/'><input type='text' name='foo'><input type='password' name='pass'></form>");
 
         assertIntact("<div id='bar'></div>");
+
+	assertReject("class no prefix", "<div class='foo'></div>");
+	assertIntact("<div class='safe-html-foo'></div>");
     }
 
     @Test
