@@ -57,6 +57,8 @@ will be sanitized to:
 </div>
 ```
 
+The required prefix can be changed through the system property: `safe-html-class-prefix`. If unset or empty it defaults to `safe-html-`.
+
 
 == About Internal Names
 

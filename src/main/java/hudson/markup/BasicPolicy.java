@@ -10,7 +10,14 @@ import org.owasp.html.Sanitizers;
 public class BasicPolicy {
     public static final PolicyFactory POLICY_DEFINITION;
 
-    public static final String prefix = "safe-html-";
+    public static final String property = "safe-html-class-prefix";
+
+    /* Disallow empty string since we use startsWith() in our policy which
+     * would match _all_ strings */
+    public static final String prefix = (
+        System.getProperty( property ) != null
+	    && !System.getProperty( property ).trim().isEmpty()
+    ) ? System.getProperty( property ) : "safe-html-";
 
     @Restricted(NoExternalUse.class)
     public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder()

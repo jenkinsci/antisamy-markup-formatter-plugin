@@ -8,7 +8,7 @@
     ${%attribute_id}
   </f:description>
   <f:description>
-    ${%attribute_class(instance.prefix)}
+    ${%attribute_class(instance.prefix, instance.property)}
   </f:description>
   <f:entry field="disableSyntaxHighlighting">
       <f:checkbox title="${%disableSyntaxHighlighting}"/>
