@@ -49,7 +49,7 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
     }
 
     public String getCodeMirrorConfig() {
-        return "mode:'text/html'";
+        return "\"mode\":\"text/html\"";
     }
 
     @Extension
