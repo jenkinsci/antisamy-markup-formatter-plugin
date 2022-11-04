@@ -30,12 +30,15 @@ public class BasicPolicyTest extends Assert {
         assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='noopener' target='foo'>relative</a>");
         assertSanitize("<a href='relative/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='nofollow' target='_blank'>relative</a>");
 
+        assertSanitize("<a href='https://www.cloudbees.com' target='_blank' title='click me'>relative</a>", "<a href='https://www.cloudbees.com' target='_blank' title='click me'>relative</a>");
+
         assertSanitize("<a href='mailto:kk&#64;kohsuke.org' rel='nofollow noopener noreferrer'>myself</a>", "<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
         assertReject("javascript","<a href='javascript:alert(5)'>test</a>");
 
         assertIntact("<img src='http://www.cloudbees.com' />");
         assertIntact("<img src='relative/test.png' />");
         assertIntact("<img src='relative/test.png' />");
+        assertIntact("<img src='relative/test.png' title='click me' />");
         assertReject("onerror","<img src='x' onerror='alert(5)'>");
         assertReject("javascript","<img src='javascript:alert(5)'>");
 
@@ -74,12 +77,12 @@ public class BasicPolicyTest extends Assert {
         input = input.replace('\'','\"');
         assertSanitize(input,input);
     }
-    
+
     private void assertReject(String problematic, String input) {
         String out = sanitize(input);
         assertFalse(out, out.contains(problematic));
     }
-    
+
     private void assertSanitize(String expected, String input) {
         assertEquals(expected.replace('\'','\"'),sanitize(input));
     }
