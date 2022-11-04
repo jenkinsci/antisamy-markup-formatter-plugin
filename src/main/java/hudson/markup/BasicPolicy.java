@@ -21,6 +21,7 @@ public class BasicPolicy {
             .onElements("a")
             .toFactory();
 
+    @Restricted(NoExternalUse.class)
     public static final PolicyFactory TITLE_ATTRIBUTES = new HtmlPolicyBuilder()
             .allowAttributes("title")
             .onElements("a", "img")
