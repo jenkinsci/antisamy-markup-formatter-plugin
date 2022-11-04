@@ -30,7 +30,7 @@ public class BasicPolicyTest extends Assert {
         assertSanitize("<a href='relative/link' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='noopener' target='foo'>relative</a>");
         assertSanitize("<a href='relative/link' target='_blank' rel='nofollow noopener noreferrer'>relative</a>", "<a href='relative/link' rel='nofollow' target='_blank'>relative</a>");
 
-        assertSanitize("<a href='https://www.cloudbees.com' target='_blank' title='click me'>relative</a>", "<a href='https://www.cloudbees.com' target='_blank' title='click me'>relative</a>");
+        assertSanitize("<a href='https://www.cloudbees.com' target='_blank' title='click me' rel='nofollow noopener noreferrer'>relative</a>", "<a href='https://www.cloudbees.com' target='_blank' title='click me'>relative</a>");
 
         assertSanitize("<a href='mailto:kk&#64;kohsuke.org' rel='nofollow noopener noreferrer'>myself</a>", "<a href='mailto:kk&#64;kohsuke.org'>myself</a>");
         assertReject("javascript","<a href='javascript:alert(5)'>test</a>");
