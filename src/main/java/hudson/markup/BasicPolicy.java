@@ -23,6 +23,7 @@ public class BasicPolicy {
 
     @Restricted(NoExternalUse.class)
     public static final PolicyFactory TITLE_ATTRIBUTES = new HtmlPolicyBuilder()
+            .allowElements("a", "img")
             .allowAttributes("title")
             .onElements("a", "img")
             .toFactory();
