@@ -66,8 +66,8 @@ public class BasicPolicyTest extends Assert {
 
         assertIntact("<div id='bar'></div>");
 
-	assertReject("class no prefix", "<div class='foo'></div>");
-	assertIntact("<div class='safe-html-foo'></div>");
+        assertReject("class no prefix", "<div class='foo'></div>");
+        assertIntact("<div class='safe-html-foo'></div>");
     }
 
     @Test
