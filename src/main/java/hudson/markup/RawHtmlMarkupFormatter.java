@@ -29,6 +29,14 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
         return disableSyntaxHighlighting;
     }
 
+    public String getPrefix() {
+        return BasicPolicy.prefix;
+    }
+
+    public String getProperty() {
+        return BasicPolicy.property;
+    }
+
     @Override
     public void translate(String markup, Writer output) throws IOException {
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
