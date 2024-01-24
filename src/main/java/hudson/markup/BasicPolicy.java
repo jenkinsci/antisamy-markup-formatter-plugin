@@ -21,6 +21,13 @@ public class BasicPolicy {
             .onElements("a")
             .toFactory();
 
+    @Restricted(NoExternalUse.class)
+    public static final PolicyFactory TITLE_ATTRIBUTES = new HtmlPolicyBuilder()
+            .allowElements("a", "img")
+            .allowAttributes("title")
+            .onElements("a", "img")
+            .toFactory();
+
     static {
         POLICY_DEFINITION = Sanitizers.BLOCKS.
                 and(Sanitizers.FORMATTING).
@@ -28,6 +35,6 @@ public class BasicPolicy {
                 and(Sanitizers.LINKS).
                 and(Sanitizers.STYLES).
                 and(Sanitizers.TABLES).
-                and(ADDITIONS).and(LINK_TARGETS);
+                and(ADDITIONS).and(LINK_TARGETS).and(TITLE_ATTRIBUTES);
     }
 }
