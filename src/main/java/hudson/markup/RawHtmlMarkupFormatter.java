@@ -1,24 +1,26 @@
 package hudson.markup;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
+import java.io.IOException;
+import java.io.Writer;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.owasp.html.Handler;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
 
-import java.io.IOException;
-import java.io.Writer;
-
 /**
  * {@link MarkupFormatter} that sanitizes HTML, allowing some safe (formatting) HTML.
- *
+ * <p>
  * Before SECURITY-26 was fixed in Jenkins 1.454, this allowed all HTML without restriction.
  * Since then, the class name is a misnomer, but kept for backwards compatibility.
  *
  */
 public class RawHtmlMarkupFormatter extends MarkupFormatter {
 
-    final boolean disableSyntaxHighlighting;
+    public static final MarkupFormatter INSTANCE = new RawHtmlMarkupFormatter(false);
+
+    private final boolean disableSyntaxHighlighting;
 
     @DataBoundConstructor
     public RawHtmlMarkupFormatter(final boolean disableSyntaxHighlighting) {
@@ -30,7 +32,7 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
     }
 
     @Override
-    public void translate(String markup, Writer output) throws IOException {
+    public void translate(String markup, @NonNull Writer output) throws IOException {
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
                 output,
                 // Receives notifications on a failure to write to the output.
@@ -39,8 +41,7 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
                 // truly bizarre inputs.
                 x -> {
                     throw new Error(x);
-                }
-        );
+                });
         HtmlSanitizer.sanitize(markup, BasicPolicy.POLICY_DEFINITION.apply(renderer));
     }
 
@@ -54,11 +55,11 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
 
     @Extension
     public static class DescriptorImpl extends MarkupFormatterDescriptor {
+
+        @NonNull
         @Override
         public String getDisplayName() {
             return "Safe HTML";
         }
     }
-
-    public static final MarkupFormatter INSTANCE = new RawHtmlMarkupFormatter(false);
 }
