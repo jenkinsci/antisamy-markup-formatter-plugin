@@ -9,7 +9,8 @@ import org.owasp.html.Sanitizers;
 public class BasicPolicy {
 
     @Restricted(NoExternalUse.class)
-    public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr", "pre").toFactory();
+    public static final PolicyFactory ADDITIONS =
+            new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr", "pre").toFactory();
 
     @Restricted(NoExternalUse.class)
     public static final PolicyFactory LINK_TARGETS = new HtmlPolicyBuilder()

@@ -2,13 +2,12 @@ package hudson.markup;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
+import java.io.IOException;
+import java.io.Writer;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.owasp.html.Handler;
 import org.owasp.html.HtmlSanitizer;
 import org.owasp.html.HtmlStreamRenderer;
-
-import java.io.IOException;
-import java.io.Writer;
 
 /**
  * {@link MarkupFormatter} that sanitizes HTML, allowing some safe (formatting) HTML.
@@ -42,8 +41,7 @@ public class RawHtmlMarkupFormatter extends MarkupFormatter {
                 // truly bizarre inputs.
                 x -> {
                     throw new Error(x);
-                }
-        );
+                });
         HtmlSanitizer.sanitize(markup, BasicPolicy.POLICY_DEFINITION.apply(renderer));
     }
 
