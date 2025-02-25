@@ -7,12 +7,14 @@
     <version>5.7</version>
     <relativePath />
   </parent>
+
   <artifactId>antisamy-markup-formatter</artifactId>
   <version>${changelist}</version>
   <packaging>hpi</packaging>
   <name>OWASP Markup Formatter Plugin</name>
   <description>Sanitize HTML markup in user-submitted text to be displayed on the Jenkins UI.</description>
   <url>https://github.com/jenkinsci/antisamy-markup-formatter-plugin</url>
+
   <licenses>
     <license>
       <name>MIT</name>
@@ -35,6 +37,7 @@
     <spotless.check.skip>false</spotless.check.skip>
     <hpi.compatibleSinceVersion>2.0</hpi.compatibleSinceVersion>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -46,6 +49,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
