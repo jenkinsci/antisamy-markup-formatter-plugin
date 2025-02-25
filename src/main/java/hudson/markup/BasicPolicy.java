@@ -7,7 +7,6 @@ import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 
 public class BasicPolicy {
-    public static final PolicyFactory POLICY_DEFINITION;
 
     @Restricted(NoExternalUse.class)
     public static final PolicyFactory ADDITIONS = new HtmlPolicyBuilder().allowElements("dl", "dt", "dd", "hr", "pre").toFactory();
@@ -21,13 +20,16 @@ public class BasicPolicy {
             .onElements("a")
             .toFactory();
 
-    static {
-        POLICY_DEFINITION = Sanitizers.BLOCKS.
-                and(Sanitizers.FORMATTING).
-                and(Sanitizers.IMAGES).
-                and(Sanitizers.LINKS).
-                and(Sanitizers.STYLES).
-                and(Sanitizers.TABLES).
-                and(ADDITIONS).and(LINK_TARGETS);
+    public static final PolicyFactory POLICY_DEFINITION = Sanitizers.BLOCKS
+            .and(Sanitizers.FORMATTING)
+            .and(Sanitizers.IMAGES)
+            .and(Sanitizers.LINKS)
+            .and(Sanitizers.STYLES)
+            .and(Sanitizers.TABLES)
+            .and(ADDITIONS)
+            .and(LINK_TARGETS);
+
+    private BasicPolicy() {
+        // hidden
     }
 }
