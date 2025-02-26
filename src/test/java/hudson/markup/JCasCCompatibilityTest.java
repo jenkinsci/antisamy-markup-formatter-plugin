@@ -9,14 +9,15 @@ public class JCasCCompatibilityTest extends RoundTripAbstractTest {
 
     @Override
     protected void assertConfiguredAsExpected(RestartableJenkinsRule restartableJenkinsRule, String s) {
-        final Jenkins jenkins = restartableJenkinsRule.j.jenkins;
+        Jenkins jenkins = restartableJenkinsRule.j.jenkins;
 
-        Assert.assertTrue("Safe HTML markup formatter should be configured", jenkins.getMarkupFormatter() instanceof RawHtmlMarkupFormatter);
+        Assert.assertTrue(
+                "Safe HTML markup formatter should be configured",
+                jenkins.getMarkupFormatter() instanceof RawHtmlMarkupFormatter);
     }
 
     @Override
     protected String stringInLogExpected() {
         return "Setting class hudson.markup.RawHtmlMarkupFormatter.disableSyntaxHighlighting = true";
     }
-
 }
