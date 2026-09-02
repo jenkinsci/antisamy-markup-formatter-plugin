@@ -1,19 +1,24 @@
 package hudson.markup;
 
-import io.jenkins.plugins.casc.misc.RoundTripAbstractTest;
-import jenkins.model.Jenkins;
-import org.junit.Assert;
-import org.jvnet.hudson.test.RestartableJenkinsRule;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JCasCCompatibilityTest extends RoundTripAbstractTest {
+import io.jenkins.plugins.casc.misc.junit.jupiter.AbstractRoundTripTest;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
+
+@WithJenkins
+class JCasCCompatibilityTest extends AbstractRoundTripTest {
 
     @Override
-    protected void assertConfiguredAsExpected(RestartableJenkinsRule restartableJenkinsRule, String s) {
-        Jenkins jenkins = restartableJenkinsRule.j.jenkins;
-
-        Assert.assertTrue(
-                "Safe HTML markup formatter should be configured",
-                jenkins.getMarkupFormatter() instanceof RawHtmlMarkupFormatter);
+    protected void assertConfiguredAsExpected(JenkinsRule jenkinsRule, String s) {
+        assertInstanceOf(
+                RawHtmlMarkupFormatter.class,
+                jenkinsRule.jenkins.getMarkupFormatter(),
+                "Safe HTML markup formatter should be configured");
+        assertTrue(
+                ((RawHtmlMarkupFormatter) jenkinsRule.jenkins.getMarkupFormatter()).isDisableSyntaxHighlighting(),
+                "Safe HTML markup formatter should be configured with disable syntax highlighting = true");
     }
 
     @Override
