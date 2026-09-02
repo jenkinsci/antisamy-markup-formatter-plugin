@@ -31,7 +31,7 @@
   <properties>
     <changelist>999999-SNAPSHOT</changelist>
     <gitHubRepo>jenkinsci/antisamy-markup-formatter-plugin</gitHubRepo>
-    <hpi.bundledArtifacts>owasp-java-html-sanitizer</hpi.bundledArtifacts>
+    <hpi.bundledArtifacts>java10-shim,java8-shim,owasp-java-html-sanitizer</hpi.bundledArtifacts>
     <hpi.strictBundledArtifacts>true</hpi.strictBundledArtifacts>
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <jenkins.baseline>2.479</jenkins.baseline>
@@ -56,7 +56,7 @@
     <dependency>
       <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
       <artifactId>owasp-java-html-sanitizer</artifactId>
-      <version>20220608.1</version>
+      <version>20260313.1</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
