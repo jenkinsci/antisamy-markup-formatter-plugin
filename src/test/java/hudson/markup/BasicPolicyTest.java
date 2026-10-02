@@ -1,12 +1,16 @@
 package hudson.markup;
 
-import java.io.IOException;
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BasicPolicyTest extends Assert {
+import org.junit.jupiter.api.Test;
+
+class BasicPolicyTest {
+
     @Test
-    public void testPolicy() {
+    void testPolicy() {
         assertSanitize(
                 "<a href='https://www.cloudbees.com' rel='nofollow noopener noreferrer'>CB</a>",
                 "<a href='https://www.cloudbees.com'>CB</a>");
@@ -96,29 +100,37 @@ public class BasicPolicyTest extends Assert {
     }
 
     @Test
-    public void testProtocolRelativeUrl() {
+    void testProtocolRelativeUrl() {
         assertReject("action", "<form action='//example.org/evil.php'><input type='submit'/></form>");
     }
 
-    private void assertIntact(String input) {
+    private static void assertIntact(String input) {
         input = input.replace('\'', '\"');
         assertSanitize(input, input);
     }
 
-    private void assertReject(String problematic, String input) {
+    private static void assertReject(String problematic, String input) {
         String out = sanitize(input);
-        assertFalse(out, out.contains(problematic));
+        assertFalse(out.contains(problematic), out);
     }
 
-    private void assertSanitize(String expected, String input) {
-        assertEquals(expected.replace('\'', '\"'), sanitize(input));
-    }
+    private static void assertSanitize(String expected, String input) {
+        expected = expected.replace('\'', '\"');
+        String sanitizedHtml = sanitize(input);
 
-    private String sanitize(String input) {
-        try {
-            return new RawHtmlMarkupFormatter(false).translate(input);
-        } catch (IOException ex) {
-            throw new AssertionError(ex);
+        // https://github.com/OWASP/java-html-sanitizer/issues/336
+        if (input.contains("<a") && expected.contains("rel=")) {
+            assertTrue(sanitizedHtml.contains("noopener"));
+            assertTrue(sanitizedHtml.contains("noreferrer"));
+            assertTrue(sanitizedHtml.contains("nofollow"));
+
+            sanitizedHtml = sanitizedHtml.replaceAll("rel=\".+ .+ .+\"", "rel=\"nofollow noopener noreferrer\"");
         }
+
+        assertEquals(expected, sanitizedHtml);
+    }
+
+    private static String sanitize(String input) {
+        return assertDoesNotThrow(() -> RawHtmlMarkupFormatter.INSTANCE.translate(input));
     }
 }
